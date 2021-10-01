@@ -16,9 +16,9 @@ const FIRST_QUERY = gql`
 
 const useCharacters = () => {
     const { loading, error, data } = useQuery(FIRST_QUERY);
-    const { results } = data.characters;
 
-    return { loading, error, results }
+
+    return { loading, error, data }
 }
 
 export default useCharacters

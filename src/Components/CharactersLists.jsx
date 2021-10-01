@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useCharacters from '../Hooks/useCharactersQuery';
 
@@ -20,19 +20,24 @@ const DivStyles = styled.div`
 `;
 
 function CharactersLists() {
-  const { loading, error, results } = useCharacters();
+  const { loading, error, data } = useCharacters();
 
   if (loading) return <h1>Fetsching the data </h1>;
   if (error) return <h1>Something went wrong </h1>;
 
   return (
     <DivStyles>
-      {results.map((char, idx) => {
+      {data.characters.results.map((char, idx) => {
         return (
-          <div className="container" key={idx}>
-            <img src={char.image} alt="AVATAR" />
-            {/* <h1>{char.name}</h1> */}
-          </div>
+          <Link to={`/${char.id}`} className="container" key={idx}>
+            <img
+              id={char.id}
+              src={char.image}
+              alt="AVATAR"
+              onClick={(e) => {}}
+            />
+            <h3>{char.name}</h3>
+          </Link>
         );
       })}
     </DivStyles>
