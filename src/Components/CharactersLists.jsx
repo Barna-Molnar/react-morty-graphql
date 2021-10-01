@@ -1,6 +1,7 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
+
 import styled from 'styled-components';
+import useCharacters from '../Hooks/useCharactersQuery';
 
 const DivStyles = styled.div`
   display: grid;
@@ -18,30 +19,12 @@ const DivStyles = styled.div`
   }
 `;
 
-const FIRST_QUERY = gql`
-  query GetCharacters {
-    characters {
-      results {
-        id
-        name
-        gender
-        created
-        image
-      }
-    }
-  }
-`;
-
 function CharactersLists() {
-  const { loading, error, data } = useQuery(FIRST_QUERY);
+  const { loading, error, results } = useCharacters();
 
-  if (loading) return <h1>Loading the data... </h1>;
-  if (error) return <h1>{error.message} </h1>;
+  if (loading) return <h1>Fetsching the data </h1>;
+  if (error) return <h1>Something went wrong </h1>;
 
-  const { results } = data.characters;
-  if (data) {
-    console.log(results);
-  }
   return (
     <DivStyles>
       {results.map((char, idx) => {
