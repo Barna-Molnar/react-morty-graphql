@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { gql, useQuery } from '@apollo/client';
+
+const FIRST_QUERY = gql`
+  query GetCharacters {
+    characters {
+      results {
+        id
+        name
+        gender
+        created
+        image
+      }
+    }
+  }
+`;
 
 function App() {
+  const { loading, error, data } = useQuery(FIRST_QUERY);
+
+  if (loading) return <h1>Loading the data... </h1>;
+  if (error) return <h1>{error.message} </h1>;
+
+  if (data) {
+    // const { characters } = data;
+    const { results } = data.characters;
+    // console.log(data);
+    console.log(results);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Should not be empty the site :D </h1>
     </div>
   );
 }
